@@ -53,12 +53,9 @@ function UpcomingMovie() {
           </a>
         </div>
         <nav className="main-nav">
-        {/* <Link to={`${process.env.PUBLIC_URL}/`}>현재상영작</Link>
+          <Link to={`${process.env.PUBLIC_URL}/`}>현재상영작</Link>
           <Link to={`${process.env.PUBLIC_URL}/upcoming`}>개봉예정작</Link>
-          <Link to={`${process.env.PUBLIC_URL}/coin`}>코인</Link> */}
-          <Link to="/">현재상영작</Link>
-          <Link to="/upcoming">개봉예정작</Link>
-          <Link to="/coin">코인</Link>
+          <Link to={`${process.env.PUBLIC_URL}/coin`}>코인</Link>
         </nav>
       </header>
 
@@ -75,7 +72,7 @@ function UpcomingMovie() {
               </div>
             ) : (
               upcomingMovies.map((movie) => (
-                <Link to={`/upcoming/movie/${movie.id}`} key={movie.id}>
+                <Link to={`${process.env.PUBLIC_URL}/upcoming/movie/${movie.id}`} key={movie.id}>
                   {movie.poster_path && (
                     <img
                       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
