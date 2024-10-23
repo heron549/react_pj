@@ -1,19 +1,19 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { MovieContext } from "./movieProvider";
+import { UpcomingMovieContext } from "./UpcomingMovieProvider";
 import { Link } from "react-router-dom";
 import "../sample1.css";
 
-function Movie() {
-  const { movieData, setPage, fetchMovieData } = useContext(MovieContext);
+function UpcomingMovie() {
+  const { upcomingMovies, setPage, hasMore } = useContext(UpcomingMovieContext);
   const [loading, setLoading] = useState(false);
   const observerRef = useRef();
 
   // 무한 스크롤 구현
   useEffect(() => {
     const loadMoreMovies = (entries) => {
-      if (entries[0].isIntersecting && !loading) {
-        setLoading(true);
-        setPage((prevPage) => prevPage + 1);
+      if (entries[0].isIntersecting && !loading && hasMore) {
+        setLoading(true); // 로딩 상태로 설정
+        setPage((prevPage) => prevPage + 1); // 다음 페이지로 이동
       }
     };
 
@@ -32,14 +32,14 @@ function Movie() {
         observer.unobserve(observerRef.current);
       }
     };
-  }, [loading, setPage]);
+  }, [loading, hasMore, setPage]); // 의존성에 hasMore 추가
 
-  // movieData가 업데이트될 때 로딩 상태 초기화
+  // upcomingMovies가 업데이트될 때 로딩 상태 초기화
   useEffect(() => {
     if (loading) {
-      setLoading(false);
+      setLoading(false); // 로딩이 끝났으므로 상태 초기화
     }
-  }, [loading]);
+  }, [upcomingMovies]); // upcomingMovies가 변경될 때마다 호출
 
   return (
     <div>
@@ -58,11 +58,12 @@ function Movie() {
           <Link to="/coin">코인</Link>
         </nav>
       </header>
+
       <section className="main-container">
         <div className="location" id="home">
-          <h1 id="home">현재상영작</h1>
+          <h1 id="home">개봉예정작</h1>
           <div className="box">
-            {movieData.length === 0 ? (
+            {upcomingMovies.length === 0 ? (
               <div className="newtons-cradle">
                 <div className="newtons-cradle__dot"></div>
                 <div className="newtons-cradle__dot"></div>
@@ -70,8 +71,8 @@ function Movie() {
                 <div className="newtons-cradle__dot"></div>
               </div>
             ) : (
-              movieData.map((movie) => (
-                <Link to={`/movie/${movie.id}`} key={movie.id}>
+              upcomingMovies.map((movie) => (
+                <Link to={`/upcoming/movie/${movie.id}`} key={movie.id}>
                   {movie.poster_path && (
                     <img
                       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -91,14 +92,13 @@ function Movie() {
                 <div className="newtons-cradle__dot"></div>
                 <div className="newtons-cradle__dot"></div>
               </div>
-              <p>Loading more movies...</p>
+              <p>Loading more upcoming movies...</p>
             </div>
           )}
         </div>
-      </section>{" "}
-      {/* 여기서 section 태그를 닫아줍니다 */}
+      </section>
     </div>
   );
 }
 
-export default Movie;
+export default UpcomingMovie;
