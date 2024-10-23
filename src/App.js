@@ -13,7 +13,7 @@ function App() {
   return (
     <MovieProvider> {/* MovieProvider로 감싸줌 */}
       <UpcomingMovieProvider> {/* UpcomingMovieProvider로 감싸줌 */}
-        <Router basename={process.env.PUBLIC_URL}>
+        <Router>
           <div>
             <Routes>
               <Route path={process.env.PUBLIC_URL + "/"} element={<Movie />} />
