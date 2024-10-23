@@ -53,9 +53,9 @@ function UpcomingMovie() {
           </a>
         </div>
         <nav className="main-nav">
-          <Link to="/">현재상영작</Link>
-          <Link to="/upcoming">개봉예정작</Link>
-          <Link to="/coin">코인</Link>
+        <Link to={`${process.env.PUBLIC_URL}/`}>현재상영작</Link>
+          <Link to={`${process.env.PUBLIC_URL}/upcoming`}>개봉예정작</Link>
+          <Link to={`${process.env.PUBLIC_URL}/coin`}>코인</Link>
         </nav>
       </header>
 
