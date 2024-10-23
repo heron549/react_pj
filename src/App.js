@@ -16,7 +16,7 @@ function App() {
         <Router>
           <div>
             <Routes>
-              <Route path="/" element={<Movie />} />
+              <Route path={`${process.env.PUBLIC_URL}/`} element={<Movie />} />
               <Route path="/movie/:movieId" element={<MovieDetail />} /> {/* 기존 경로 */}
               <Route path="/upcoming" element={<UpcomingMovie />} /> {/* 새로운 경로 */}
               <Route path="/upcoming/movie/:movieId" element={<UpcomingMovieDetail />} /> {/* 개봉 예정작 상세 경로 */}
